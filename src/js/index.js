@@ -10,6 +10,8 @@ var initGame = (function () {
   var oWrap = document.getElementsByClassName('wrap')[0],
     wrapWidth = parseInt(getStyle(oWrap, 'width')),
     wrapHeight = parseInt(getStyle(oWrap, 'height')),
+    oDirBtns = document.getElementsByClassName('dir-btn'),
+    dirLen = oDirBtns.length,
     tMove = null;
 
   var Snake = function () {
@@ -35,9 +37,17 @@ var initGame = (function () {
 
     bindEvent: function () {
       var _self = this;
+
       addEvent(document, 'keydown', function () {
         _self.changeDir();
       });
+
+      for (var i = 0; i < dirLen; i++) {
+        addEvent(oDirBtns[i], 'click', function () {
+          _self.changeDir();
+        })
+      }
+
     },
 
     initSnake: function () {
@@ -147,9 +157,37 @@ var initGame = (function () {
 
     changeDir: function (e) {
       var e = e || window.event,
+        tar = e.target || window.srcElement,
         code = e.keyCode;
 
+      if (!e.keyCode) {
+        code = this.dirCode(tar.getAttribute('dir'));
+      }
+
       this.setDir(code);
+    },
+
+    dirCode: function (dir) {
+      var code;
+
+      switch (dir) {
+        case 'LEFT':
+          code = 37;
+          break;
+        case 'TOP':
+          code = 38;
+          break;
+        case 'RIGHT':
+          code = 39;
+          break;
+        case 'BOTTOM':
+          code = 40;
+          break;
+        default:
+          break;
+      }
+
+      return code;
     },
 
     setDir: function (code) {
@@ -207,7 +245,7 @@ var initGame = (function () {
           newSnakePoint.y = arr[0].y;
           newSnakePoint.x = arr[0].x > arr[1].x ? arr[0].x + 20 : arr[0].x - 20;
         }
-        
+
         arr.unshift(newSnakePoint);
         this.initSnake();
         this.removeFood();
