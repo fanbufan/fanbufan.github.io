@@ -161,13 +161,13 @@ var initGame = (function () {
         code = e.keyCode;
 
       if (!e.keyCode) {
-        code = this.dirCode(tar.getAttribute('dir'));
+        code = this.dirCodeMap(tar.getAttribute('dir'));
       }
 
       this.setDir(code);
     },
 
-    dirCode: function (dir) {
+    dirCodeMap: function (dir) {
       var code;
 
       switch (dir) {
