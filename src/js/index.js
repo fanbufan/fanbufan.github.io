@@ -169,7 +169,6 @@ var initGame = (function () {
 
     dirCodeMap: function (dir) {
       var code;
-
       switch (dir) {
         case 'LEFT':
           code = 37;
@@ -186,7 +185,6 @@ var initGame = (function () {
         default:
           break;
       }
-
       return code;
     },
 
